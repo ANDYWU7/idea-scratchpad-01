@@ -8,8 +8,8 @@ A simple, browser-local whiteboard for notes, sticky notes, and connected ideas.
 
 Live site: https://andywu7.github.io/idea-scratchpad-01/
 
-Every push to `main` publishes the files in `dist/` with GitHub Actions.
+Every push to `main` publishes the app in `dist/`. The repository's root `index.html` redirects to `dist/index.html`, so both branch publishing and the GitHub Actions workflow open the app at the same address.
 
 ## Run locally
 
-Open `dist/index.html` in a browser, or run `node serve.js` from the project directory and visit http://127.0.0.1:4173.
+Serve this directory with a local static web server and open its homepage.

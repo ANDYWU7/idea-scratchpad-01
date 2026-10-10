@@ -880,7 +880,25 @@ document.addEventListener('keydown', event => {
 });
 window.addEventListener('pagehide', persistCurrent);
 document.addEventListener('visibilitychange', () => { if (document.hidden) persistCurrent(); });
-window.addEventListener('resize', () => { if (typing) renderTyping(); drawConnections(); });
+function fitWhiteboard() {
+  const stage = $('.paper-stage');
+  const paper = $('#paper');
+  const style = getComputedStyle(paper);
+  const borderX = parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth);
+  const borderY = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+  // Size from the space left after the toolbars, keeping every canvas pixel visible.
+  const scale = Math.max(0, Math.min((stage.clientWidth - borderX) / W, (stage.clientHeight - borderY) / H));
+  paper.style.width = `${W * scale + borderX}px`;
+  paper.style.height = `${H * scale + borderY}px`;
+  paper.style.setProperty('--board-width', `${W * scale}px`);
+  if (typing) renderTyping();
+  drawConnections();
+}
+window.addEventListener('resize', fitWhiteboard);
+if ('ResizeObserver' in window) {
+  new ResizeObserver(fitWhiteboard).observe($('.paper-stage'));
+}
+fitWhiteboard();
 
 function seedPaper(kind, legacySample = false) {
   ctx.clearRect(0, 0, W, H);

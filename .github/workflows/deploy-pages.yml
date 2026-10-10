@@ -30,20 +30,7 @@ jobs:
         run: |
           mkdir -p _site/dist
           cp -R dist/. _site/dist/
-          cat > _site/index.html <<'HTML'
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1">
-              <meta http-equiv="refresh" content="0; url=dist/index.html">
-              <title>Idea Scratchpad</title>
-            </head>
-            <body>
-              <p>Opening <a href="dist/index.html">Idea Scratchpad</a>…</p>
-            </body>
-          </html>
-          HTML
+          cp index.html .nojekyll _site/
       - name: Upload the website
         uses: actions/upload-pages-artifact@v4
         with:
