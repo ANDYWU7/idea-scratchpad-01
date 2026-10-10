@@ -1,1 +1,1 @@
-# idea-scratchpad-01
+For MindDo.AI: AI Native
