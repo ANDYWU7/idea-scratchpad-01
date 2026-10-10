@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f3ed">
+  <meta name="description" content="A simple note space for ideas and reminders.">
+  <title>Scratchpad</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%23c95f40'/%3E%3Cpath d='M12 10h15v21H12zM16 15h7m-7 5h7m-7 5h4' fill='none' stroke='%23fff9ed' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="m10 13 4-4M8 15l-2 2a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M16 9l2-2a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(1 0)"/></symbol>
+    <symbol id="i-paper" viewBox="0 0 24 24"><path d="M7 3h12v18H7zM3 6v15M10 8h6M10 12h6M10 16h3"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m14 5 5 5M4 20l5-1L21 7a2 2 0 0 0-5-5L4 14zM4 14l5 5"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m14 3 7 7a2 2 0 0 1 0 3l-7 7H8l-5-5a2 2 0 0 1 0-3l8-9a2 2 0 0 1 3 0ZM7 8l9 9M14 20h7"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 5 4 10l5 5M4 10h10a6 6 0 0 1 0 12" transform="translate(0 -2)"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="m15 3 6 6-4 1-4 6-3-2-6 6M7 11l6-4zM7 11l6 5M13 7l2-4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7M14 10v7"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h4l2 2h7A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5zM3 9h18"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><path d="M4 7h16l-1 13H5L4 7ZM3 4h18v3H3zM9 11h6"/></symbol>
+    <symbol id="i-restore" viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 1 5M4 5v6h6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M6 6h.01M12 6h.01M18 6h.01M6 12h.01M12 12h.01M18 12h.01M6 18h.01M12 18h.01M18 18h.01" stroke-width="3"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  </defs></svg>
+  <aside class="sidebar">
+    <a class="brand" href="./" aria-label="Scratchpad home"><span class="brand-mark"><svg><use href="#i-paper"/></svg></span>scratchpad<span class="brand-dot">.</span></a>
+    <button class="new-note" id="new-note"><svg><use href="#i-plus"/></svg>New note<kbd>N</kbd></button>
+    <nav class="nav-sections" aria-label="Note sections"><button class="section-link active" id="all-notes" aria-current="page" title="Drop a note here to restore it without a folder"><svg><use href="#i-paper"/></svg><span>All notes</span><span class="section-count" id="active-count">0</span></button><button class="section-link" id="scrapped-notes" title="Drop a note here to scrap it"><svg><use href="#i-archive"/></svg><span>Scrapped</span><span class="section-count" id="scrapped-count">0</span></button></nav>
+    <section class="folder-area" aria-label="Folders"><div class="folder-heading"><span>FOLDERS</span><span class="folder-drop-hint">Drop notes here</span><button class="icon-button add-folder" id="add-folder" aria-label="Create folder" title="Create folder"><svg><use href="#i-plus"/></svg></button></div><nav id="folder-list" class="folder-list" aria-label="Folders"></nav></section>
+    <div class="notes-label"><span id="note-list-label">ALL NOTES</span><span id="note-count">0</span></div>
+    <nav id="note-list" class="note-list" aria-label="Notes"></nav>
+    <div class="sidebar-bottom"><span class="local-label"><span></span>Saved in this browser</span></div>
+  </aside>
+  <main>
+    <header class="workspace-header"><span class="eyebrow" id="workspace-label">ALL NOTES</span><span class="save-status" id="save-status" role="status"><span></span>Saved</span></header>
+    <section class="note-workspace" aria-label="Note editor">
+      <div class="note-heading"><div class="title-group"><input id="note-title" aria-label="Note title" value="Ideas" maxlength="80"><span class="title-meta"><span id="note-date">Note created</span><span class="state-chip" id="note-state" hidden></span></span></div><div class="note-actions"><label class="folder-select" id="folder-select-label"><span>Folder</span><select id="note-folder" aria-label="Move note to folder"><option value="">All notes</option></select></label><button class="action-chip" id="scrap-note" aria-label="Scrap note" title="Move this note to Scrapped"><svg><use href="#i-archive"/></svg><span>Scrap</span></button><button class="action-chip restore-chip" id="restore-note" aria-label="Restore note" hidden><svg><use href="#i-restore"/></svg><span>Restore</span></button><button class="icon-button" id="pin-note" aria-label="Pin note" title="Pin note"><svg><use href="#i-pin"/></svg></button><button class="icon-button" id="download-note" aria-label="Download note as an image" title="Download image"><svg><use href="#i-download"/></svg></button><button class="icon-button delete-button" id="delete-note" aria-label="Delete permanently" title="Delete permanently" hidden><svg><use href="#i-trash"/></svg></button></div></div>
+      <div class="toolbar" aria-label="Paper tools"><div class="tool-group" role="group" aria-label="Choose a tool"><button class="tool active" data-tool="type" aria-pressed="true"><span class="type-icon">T</span><span>Type</span></button><button class="tool" data-tool="draw" aria-pressed="false"><svg><use href="#i-pen"/></svg><span>Draw</span></button><button class="tool" data-tool="erase" aria-pressed="false"><svg><use href="#i-eraser"/></svg><span>Erase</span></button></div><span class="toolbar-divider"></span><div class="colors" role="group" aria-label="Ink color"><button class="swatch selected" data-color="#343c36" style="--ink:#343c36" aria-label="Charcoal ink" aria-pressed="true"></button><button class="swatch" data-color="#c26345" style="--ink:#c26345" aria-label="Terracotta ink" aria-pressed="false"></button><button class="swatch" data-color="#6d8062" style="--ink:#6d8062" aria-label="Sage ink" aria-pressed="false"></button><button class="swatch" data-color="#627f9b" style="--ink:#627f9b" aria-label="Blue ink" aria-pressed="false"></button></div><span class="toolbar-divider"></span><label class="size-control"><span id="size-label">Text size</span><select id="tool-size" aria-label="Text size"><option value="small">Small</option><option value="medium" selected>Medium</option><option value="large">Large</option></select></label><div class="toolbar-right"><button class="icon-button" id="undo" aria-label="Undo" title="Undo (Ctrl+Z)" disabled><svg><use href="#i-undo"/></svg></button><button class="icon-button redo" id="redo" aria-label="Redo" title="Redo (Ctrl+Shift+Z)" disabled><svg><use href="#i-undo"/></svg></button><span class="toolbar-divider"></span><button class="icon-button active" id="toggle-grid" aria-label="Hide dot grid" aria-pressed="true" title="Hide dot grid"><svg><use href="#i-grid"/></svg></button></div></div>
+      <div class="board-actions" role="group" aria-label="Sticky notes and connections"><button class="board-action add-sticky" id="add-sticky" title="Add a sticky note to the board"><svg><use href="#i-plus"/></svg><span>Sticky note</span></button><span class="board-action-hint">Choose a sticky link, then click another sticky · Tap a line to remove</span></div>
+      <div class="paper-stage"><div class="paper" id="paper"><span class="paper-corner" aria-hidden="true">WHITEBOARD · START ANYWHERE</span><canvas id="canvas" width="1400" height="850" aria-label="Whiteboard. Select Type and click anywhere to write, or Draw to sketch. Sticky notes can be moved and connected." tabindex="0"></canvas><svg class="connection-layer" id="connection-layer" viewBox="0 0 1400 850" preserveAspectRatio="none" aria-label="Sticky note connections"></svg><div class="sticky-layer" id="sticky-layer"></div><div id="caret" aria-hidden="true"></div><div id="eraser-cursor" aria-hidden="true"></div><textarea id="text-input" aria-label="Write on whiteboard" spellcheck="false" autocapitalize="sentences"></textarea><div class="paper-bottom" aria-hidden="true"><span>SCRATCHPAD</span><span id="paper-number">01</span></div></div></div>
+      <footer class="workspace-footer"><span id="tool-hint"><span class="hint-dot"></span>Click a spot · Enter for a line · Esc to finish</span><span class="footer-right">Saved in this browser</span></footer>
+    </section>
+  </main>
+  <dialog id="folder-dialog"><form id="folder-form"><span class="dialog-icon"><svg><use href="#i-folder"/></svg></span><h2 id="folder-dialog-title">Create folder</h2><label class="dialog-label" for="folder-name">Folder name</label><input class="dialog-input" id="folder-name" maxlength="40" required autocomplete="off"><div class="dialog-actions"><button type="button" class="secondary-button" id="folder-cancel">Cancel</button><button type="button" class="danger-button" id="folder-delete" hidden>Delete folder</button><button type="submit" class="primary-button" id="folder-save">Create folder</button></div></form></dialog>
+  <dialog id="delete-dialog"><form method="dialog"><span class="dialog-icon"><svg><use href="#i-trash"/></svg></span><h2 id="delete-heading">Delete permanently?</h2><p id="delete-description">This note will be permanently deleted.</p><div class="dialog-actions"><button value="cancel" class="secondary-button" autofocus>Cancel</button><button value="delete" class="danger-button" id="confirm-delete">Delete permanently</button></div></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
